@@ -1,29 +1,34 @@
 
-int wantp = 0;
-int wantq = 0;
+bool wantp = 0;
+bool wantq = 0;
+
+#define p   0
+#define v   1
+
+chan sema = [0] of { bit };
 
 proctype thread_p(){
   do
   ::  wantq == 0;
-  :: _nr_pr == 2 -> wantp = 1;
+  :: wantp = 1;
+  :: sema!p -> wantp = 0;
+  :: sema?v;
   od
-
-  wantp = 0;
 }
 
 proctype thread_q(){
   do
-  ::  wantp ==0;
-  ::  _nr_pr == 2 -> wantq = 1;
+  ::  wantp == 0;
+  ::  wantq = 1;
+  :: sema!p -> wantq = 0;
+  :: sema?v;
   od
-
-  wantq = 0;
 }
 
 init{
   atomic{
-    run thread_p(wantp, wantq);
-    run thread_q(wantp, wantq);
+    run thread_p();
+    run thread_q();
   }
 
   _nr_pr == 1;

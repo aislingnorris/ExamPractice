@@ -23,4 +23,5 @@ init{
   }
 
   _nr_pr == 1;
+  assert(n != 20);
 }
