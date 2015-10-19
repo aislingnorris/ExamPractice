@@ -26,10 +26,8 @@ proctype thread_q(){
 }
 
 init{
-  atomic{
-    run thread_p();
-    run thread_q();
-  }
+  run thread_p();
+  run thread_q();
 
   _nr_pr == 1;
 }

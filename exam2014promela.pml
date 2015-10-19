@@ -17,10 +17,8 @@ proctype thread_q(int n){
 
 init{
   int n = 0;
-  atomic{
-    run thread_q(n);
-    run thread_p(n);
-  }
+  run thread_q(n);
+  run thread_p(n);
 
   _nr_pr == 1;
   assert(n != 20);

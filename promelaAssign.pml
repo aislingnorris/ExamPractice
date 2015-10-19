@@ -11,11 +11,9 @@ proctype thread(int n){
 
 init{
   int n = 0;
-
-  atomic{
-    run thread(n);
-    run thread(n);
-  }
+  
+  run thread(n);
+  run thread(n);
 
   _nr_pr == 1;
   
